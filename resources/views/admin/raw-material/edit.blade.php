@@ -16,16 +16,21 @@
                         <h4 class="card-title">Raw Material Details</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('admin.material.update', ['id' => $raw_material->id]) }}" method="POST">
+                        <form action="{{ route('admin.material.update', ['id' => $raw_material->id]) }}" method="POST" id="addMaterial">
                             @csrf
                             @method('PATCH')
                             <div class="form-group mb-3">
                                 <label for="name">Material Type</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Material Type" value="{{ $raw_material->name ?? '' }}" required />
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Material Type" value="{{ old('name', $raw_material->name ?? '') }}" required />
+                                @if ($errors->has('name'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-group mb-3">
                                 <label for="quantity">Quantity</label>
-                                <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity" value="{{ $raw_material->quantity ?? '' }}" readonly />
+                                <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity" value="{{ $raw_material->quantity ?? 0 }}" readonly />
                             </div>
 
                             <div class="d-flex">

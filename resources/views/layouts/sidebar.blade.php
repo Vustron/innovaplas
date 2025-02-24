@@ -29,6 +29,12 @@
                                     <span class="sidebar-normal">{{ __('Products List') }}</span>
                                 </a>
                             </li>
+                            <li class="{{ request()->is('admin/products/archived') ? 'active' : '' }}">
+                                <a href="{{ route('admin.products.archived') }}">
+                                    <span class="sidebar-mini-icon">{{ __('APL') }}</span>
+                                    <span class="sidebar-normal">{{ __('Archived Product List') }}</span>
+                                </a>
+                            </li>
                             <li class="{{ request()->is('admin/products/raw-materials') ? 'active' : '' }}">
                                 <a href="{{ route('admin.materials.list') }}">
                                     <span class="sidebar-mini-icon">{{ __('RML') }}</span>
@@ -128,9 +134,9 @@
                                     </a>
                                 </li>
                                 <li class="{{ request()->is('admin/reports/inventory') ? 'active' : '' }}">
-                                    <a href="{{ route('admin.reports.inventory') }}">
-                                        <span class="sidebar-mini-icon">{{ __('IR') }}</span>
-                                        <span class="sidebar-normal">{{ __('Inventory Report') }}</span>
+                                    <a href="{{ route('admin.reports.product.inventory') }}">
+                                        <div class="sidebar-mini-icon">{{ __('IR') }}</div>
+                                        <div class="sidebar-normal">{{ __('Inventory Report') }}</div>
                                     </a>
                                 </li>
                             </ul>
@@ -160,6 +166,12 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="{{ request()->is('admin/settings') ? 'active' : '' }}">
+                        <a href="{{ route('admin.settings.index') }}">
+                            <i class="nc-icon nc-settings-gear-65"></i>
+                            <p>{{ __('Settings') }}</p>
+                        </a>
                     </li>
                 @endif
             @endif

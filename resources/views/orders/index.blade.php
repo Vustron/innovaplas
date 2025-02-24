@@ -16,7 +16,13 @@
                 <div class="col-12 d-flex flex-wrap gap-md-2 justify-content-md-end justify-content-center btn-filter-group">
                     <button class="btn btn-primary my-0" data-filter="*">Show All</button>
                     @foreach ($statuses as $status)
-                        <button class="btn btn-secondary my-0" data-filter=".{{ strtolower(str_replace(' ', '-', $status->name)) }}">{{ $status->name }}</button>
+                        @php
+                            $slug = strtolower(str_replace(' ', '-', $status->name));
+                        @endphp
+                        <button class="btn btn-secondary my-0 position-relative" data-filter=".{{ $slug }}">
+                            {!! !empty($orders_count[str_replace('-', '_', $slug)]) ? '<span class="badge badge-danger p-1 border position-absolute end-0 top-50 translate-middle-y">'.$orders_count[str_replace('-', '_', $slug)].'</span>' : '' !!}
+                            {{ $status->name }}
+                        </button>
                     @endforeach
                 </div>
             </div>

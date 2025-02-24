@@ -9,6 +9,12 @@
 @section('content')
     <div class="content">
         @include('layouts.alert')
+        @if (count($errors))
+            <div class="alert alert-danger alert-dismissible mb-4" role="alert">
+                <p class="mb-0">Something went wrong in adding the raw material. Click <a href="#" data-bs-toggle="modal" data-bs-target="#addMaterialModal">here</a> to view.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

@@ -187,6 +187,20 @@
                     parent.find('input').attr('type', 'password');
                 }
             });
+
+            var hide_scroll = false;
+            $(document).on('show.bs.modal', function () {
+                if ($('html').hasClass('perfect-scrollbar-on')) {
+                    hide_scroll = true;
+                    $('html').removeClass('perfect-scrollbar-on');
+                }
+            });
+            $(document).on('hide.bs.modal', function () {
+                if (hide_scroll) {
+                    hide_scroll = false;
+                    $('html').addClass('perfect-scrollbar-on');
+                }
+            });
         });
     </script>
 </body>

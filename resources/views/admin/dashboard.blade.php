@@ -199,7 +199,7 @@
                                             <li class="list-group-item mb-0 d-flex flex-wrap justify-content-between align-items-center border-warning">
                                                 {{ $order->product->name }} - ({{ $order->status->name }}) 
                                                 <span>
-                                                    <small>{{ $order->updated_at->format('m/d/Y') }}</small>
+                                                    <small>{{ $order->updated_at->format('M d, Y') }}</small>
                                                     <a href="{{ route('admin.order.show', $order->id) }}" class="ms-2">View</a>
                                                 </span>
                                             </li>
@@ -286,7 +286,7 @@
                                             <li class="list-group-item mb-0 d-flex flex-wrap justify-content-between align-items-center border-warning">
                                                 {{ $order->product->name }} - ({{ $order->status->name }}) 
                                                 <span>
-                                                    <small>{{ $order->updated_at->format('m/d/Y') }}</small>
+                                                    <small>{{ $order->updated_at->format('M d, Y') }}</small>
                                                     <a href="{{ route('admin.order.show', $order->id) }}" class="ms-2">View</a>
                                                 </span>
                                             </li>

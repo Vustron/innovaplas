@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Product;
 
 class OrderRequest extends FormRequest
 {
@@ -22,9 +21,6 @@ class OrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('id');
-        $product = Product::find($id);
-
         $rules = [
             'region' => ['required'],
             'province' => ['required'],
@@ -32,16 +28,11 @@ class OrderRequest extends FormRequest
             'barangay' => ['required'],
             'street' => ['required'],
             'quantity' => ['required', 'integer'],
-            'thickness' => ['nullable', 'in:'. join(',', json_decode($product->thickness ?? '[]'))],
-            'size' => ['nullable', 'in:'. join(',', json_decode($product->sizes ?? '[]'))],
+            'thickness' => ['required_with:size', 'in:20+8 x 28 w/ hole,20+8 x 28 w/out hole'],
+            'size' => ['required_with:thickness', 'in:Tiny,Small,Medium,Large,XL'],
             'note' => ['nullable'],
             'design' => ['file', 'nullable'],
-            'size' => ['required']
         ];
-
-        if ($product->is_customize) {
-            $rules['thickness'][0] = 'required';
-        }
 
         return $rules;
     }

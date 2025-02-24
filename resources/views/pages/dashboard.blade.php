@@ -18,7 +18,10 @@
         </div>
         <div class="container">
             <div class="row mb-4">
-                <div class="col-12 d-flex flex-wrap gap-md-3 justify-content-md-end justify-content-center btn-filter-group">
+                <div class="col-md-3 d-flex align-items-center">
+                    <input type="text" class="form-control" id="search-product" placeholder="Search Product">
+                </div>
+                <div class="col-md-9 d-flex flex-wrap gap-md-3 justify-content-md-end justify-content-center btn-filter-group">
                     <button class="btn btn-primary" data-filter="*">Show All</button>
                     <button class="btn btn-secondary" data-filter=".customisable">Customizable</button>
                     <button class="btn btn-secondary" data-filter=".generic-product">Generic Product</button>
@@ -29,7 +32,7 @@
                     <div class="col-lg-4 col-md-6 product-item {{ $product->is_customize ? "customisable" : "generic-product" }}">
                         <a href="{{ route('product.show', $product->id) }}" class="card">
                             <div class="card-header">
-                                <h4 class="card-title mb-0">{{ $product->name }}</h4>
+                                <h4 class="card-title mb-0 product-title">{{ $product->name }}</h4>
                                 <span class="fw-bold">₱ {{ number_format($product->price, 2) }}</span>
                                 <hr>
                             </div>
@@ -37,7 +40,7 @@
                                 <div class="image rounded">
                                     <img src="{{ Storage::url($product->file->path) }}" alt="{{ $product->file->file_name }}" class="w-100" style="height: 200px; object-fit: cover; transition: all 0.5s ease;">
                                 </div>
-                                <p class="mb-0 mt-3" 
+                                <p class="mb-0 mt-3 product-description"
                                     style="display: -webkit-box;
                                            max-width: 100%;
                                            -webkit-line-clamp: 3;
@@ -62,18 +65,42 @@
     <script>
         $(document).ready(function() {
             demo.checkFullPageBackgroundImage();
+
+            var filters = {};
             var $list = $('.product-list').isotope({
                 // options
                 itemSelector: '.product-item',
-                masonry: true
+                masonry: true,
+                filter: function () {
+                    var isButtonMatch = filters.button ? $(this).is(filters.button) : true;
+                    var isSearchMatch = filters.search ? filters.search($(this)) : true;
+                    return isButtonMatch && isSearchMatch;
+                }
             });
 
             $('.btn-filter-group').on('click', '.btn', function () {
-                var filterValue = $(this).attr('data-filter');
-                $list.isotope({ filter: filterValue });
+                filters.button = $(this).attr('data-filter') !== '*' ? $(this).attr('data-filter') : null;
 
+                $list.isotope(); // Trigger filtering
+
+                // Update button active class
                 $('.btn-filter-group').find('.btn').removeClass('btn-primary').addClass('btn-secondary');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
+            });
+
+            // Search Filter
+            $('#search-product').on('input', function () {
+                var keyword = $(this).val().toLowerCase();
+
+                filters.search = keyword
+                    ? function (item) {
+                        var title = item.find('.product-title').text().toLowerCase();
+                        var description = item.find('.product-description').text().toLowerCase();
+                        return title.includes(keyword) || description.includes(keyword);
+                    }
+                    : null;
+
+                $list.isotope(); // Trigger filtering
             });
             // ctx = document.getElementById('chartOrders').getContext("2d");
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Setting;
 
 class PageController extends Controller
 {
@@ -40,8 +39,7 @@ class PageController extends Controller
                                         WHERE prm_sub.product_id = products.id
                                         AND rm_sub.quantity < prm_sub.count
                                     )");
-                           })
-                           ->select(['products.*'])
+                           })->select(['products.*'])
                            ->distinct()
                            ->inRandomOrder()
                            ->get();
@@ -91,21 +89,5 @@ class PageController extends Controller
     public function notifications()
     {
         return view('pages.notifications');
-    }
-
-    public function termsCondition()
-    {
-        return view('pages.terms-condition');
-    }
-
-    public function paymentOptions()
-    {
-        $payments = Setting::where('slug', 'payments')->first();
-        $options = [];
-        if (!empty($payments)) {
-            $options = json_decode($payments->content);
-        }
-
-        return view('pages.payment-options', compact('options'));
     }
 }

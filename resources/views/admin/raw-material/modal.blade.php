@@ -11,7 +11,12 @@
 
                     <div class="form-group mb-3">
                         <label for="name">Material Type</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Material Type" required />
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Material Type" value="{{ old('name') }}" required />
+                        @if ($errors->has('name'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     {{-- <div class="form-group mb-3">
                         <label for="batch_number">Batch Number</label>
@@ -69,7 +74,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title mb-0" id="restockLabel"><span class="label_type"></span> Raw Material</h2>
+                <h2 class="modal-title mb-0" id="restockLabel"><span class="label_type"></span> Raw Material Stock</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

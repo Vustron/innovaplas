@@ -14,12 +14,12 @@ class HomeController extends BaseController
     public function index()
     {
         $products = Product::where('is_customize', 0)
-                           ->where('quantity', '<', config('app.threshold'))
+                           ->where('quantity', '<', 300)
                            ->distinct()
                            ->limit(5)
                            ->get();
 
-        $materials = RawMaterial::where('quantity', '<', config('app.threshold'))
+        $materials = RawMaterial::where('quantity', '<', 300)
                             ->distinct()
                             ->limit(5)
                             ->get();

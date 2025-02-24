@@ -22,7 +22,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group text-left mb-3">
                                             <label for="name">Name</label>
-                                            <input  type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ $profile->name ?? '' }}" required />
+                                            <input  type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ old('name', $profile->name ?? '') }}" required />
                                         </div>
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -33,7 +33,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group text-left mb-3">
                                             <label for="surname">Surname</label>
-                                            <input  type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ $profile->surname ?? '' }}" required />
+                                            <input  type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ old('surname', $profile->surname ?? '') }}" required />
                                         </div>
                                         @if ($errors->has('surname'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">

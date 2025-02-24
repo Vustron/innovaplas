@@ -29,7 +29,7 @@ class UserController extends Controller
             $datatables = datatables()::of($users);
 
             $datatables->editColumn('created_at', function ($item) {
-                return $item->created_at->format('M d, Y');
+                return $item->created_at->format('m/d/Y');
             })->addColumn('actions', function ($item) {
                 return "<a href='#' class='text-muted me-3 btn-view'><i class='fa-regular fa-eye'></i> View</a>";
             })->addColumn('disable_route', function ($item) {
@@ -70,7 +70,7 @@ class UserController extends Controller
             $datatables = datatables()::of($users);
 
             $datatables->editColumn('created_at', function ($item) {
-                return $item->created_at->format('M d, Y');
+                return $item->created_at->format('m/d/Y');
             })->addColumn('actions', function ($item) {
                 return "<a href='#' class='text-muted me-3 btn-view'><i class='fa-regular fa-eye'></i> View</a>";
             })->addColumn('disable_route', function ($item) {

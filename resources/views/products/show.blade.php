@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <hr>
-                            @if ($product->quantity >= 300)
+                            @if ($product->quantity >= config('app.threshold'))
                                 <div class="d-flex gap-3 align-items-center justify-content-end">
                                     <a href="{{ route('user.product.checkout', $product->id) }}" class="btn btn-primary">Buy Now</a>
                                 </div>

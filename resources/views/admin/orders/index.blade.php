@@ -11,8 +11,18 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-title">{{ !empty($status) ? ucwords(str_replace('-', ' ', $status)) : 'All' }} Orders</h4>
+                        
+                        <div class="d-flex gap-2 align-items-center">
+                            <div class="d-flex gap-2">
+                                <select id="sales_type" class="form-select">
+                                    <option value="">Select an Option</option>
+                                    <option value="generic">Generic Product</option>
+                                    <option value="customized">Customized</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <table class="table" id="order-table">
@@ -24,7 +34,7 @@
                                     <th>Total</th>
                                     <th>Customer Name</th>
                                     <th>Status</th>
-                                    <th>Ordered At</th>
+                                    <th>Last Update</th>
                                     <th style="width: 190px">Actions</th>
                                 </tr>
                             </thead>
@@ -47,7 +57,14 @@
             var table = $('#order-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: window.location.href,
+                ajax: {
+                    url: window.location.href,
+                    data: function (d) {
+                        return $.extend({}, d, {
+                            sales_type: $('#sales_type').val()
+                        });
+                    }
+                },
                 columns: [
                     {data: 'reference', name: 'reference', orderable: true, searchable: false},
                     {data: 'product_name', name: 'product_name', orderable: true, searchable: false},
@@ -55,7 +72,7 @@
                     {data: 'total', name: 'total', orderable: true, searchable: false},
                     {data: 'full_name', name: 'full_name', orderable: false, searchable: false},
                     {data: 'status', name: 'status', orderable: true, searchable: false},
-                    {data: 'created_at', name: 'created_at', orderable: true, searchable: false},
+                    {data: 'updated_at', name: 'updated_at', orderable: true, searchable: false},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false, width: 190}
                 ],
                 order: [[ 6 , "desc" ]],
@@ -75,6 +92,10 @@
                     }
                 });
                 },
+            });
+
+            $('#sales_type').on('change', function () {
+                table.draw();
             });
         });
     </script>

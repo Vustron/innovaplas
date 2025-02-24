@@ -12,11 +12,6 @@ class Product extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'thickness' => 'array',
-        'sizes' => 'array'
-    ];
-
     public function raw_materials()
     {
         return $this->hasMany('App\Models\ProductRawMaterial');
@@ -30,10 +25,5 @@ class Product extends Model
     public function feedbacks()
     {
         return $this->hasMany('App\Models\Feedback');
-    }
-
-    public function batches()
-    {
-        return $this->hasMany('App\Models\ProductBatch');
     }
 }

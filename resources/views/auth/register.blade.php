@@ -29,10 +29,10 @@
                                         <h6 class="text-left mb-0">Login Credentials</h6>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-12 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="email">Email <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required />
+                                            <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}" placeholder="Email" required />
                                         </div>
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <label for="password">Password <span class="text-danger">*</span></label>
-                                        <div class="form-group position-relative text-left mb-3">
+                                        <div class="form-group position-relative mb-3">
                                             <input type="password" class="form-control" name="password" id="password" placeholder="Password" required />
                                             <i class="fa fa-eye position-absolute top-50 translate-middle-y btn-password" style="right: 10px;"></i>
                                         </div>
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <label for="password_confirmation">Password Confirmation <span class="text-danger">*</span></label>
-                                        <div class="form-group position-relative text-left mb-3">
+                                        <div class="form-group position-relative mb-3">
                                             <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Password Confirmation" required />
                                             <i class="fa fa-eye position-absolute top-50 translate-middle-y btn-password" style="right: 10px;"></i>
                                         </div>
@@ -69,10 +69,10 @@
                                         <h6 class="text-left mb-0">Personal Information</h6>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="name">Name <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ $profile->name ?? '' }}" required />
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ old('name') }}" required />
                                         </div>
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -80,10 +80,10 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="surname">Surname <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ $profile->surname ?? '' }}" required />
+                                            <input type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ old('surname') }}" required />
                                         </div>
                                         @if ($errors->has('surname'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -92,10 +92,10 @@
                                         @endif
                                     </div>
                                     
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="contact_number" id="contact_number" placeholder="Contact Number" value="{{ $profile->contact_number ?? '' }}" required />
+                                            <input type="text" class="form-control" name="contact_number" id="contact_number" placeholder="Contact Number" value="{{ old('contact_number') }}" required />
                                         </div>
                                         @if ($errors->has('contact_number'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -108,10 +108,10 @@
                                         <h6 class="text-left">Address</h6>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="region">Region <span class="text-danger">*</span></label>
-                                            <select name="region" id="region" class="form-select" data-value="{{ $profile->region ?? '' }}" required>
+                                            <select name="region" id="region" class="form-select" data-value="{{ old('region') }}" required>
                                                 <option value="">Select an option</option>
                                                 @foreach ($regions as $region)
                                                     <option value="{{ $region->region_code }}">{{ $region->region_name }}</option>
@@ -124,10 +124,10 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="province">Province <span class="text-danger">*</span></label>
-                                            <select name="province" id="province" class="form-select" data-value="{{ $profile->province ?? '' }}" required>
+                                            <select name="province" id="province" class="form-select" data-value="{{ old('province') }}" required>
                                                 <option value="">Select an option</option>
                                             </select>
                                         </div>
@@ -137,10 +137,10 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="city">City <span class="text-danger">*</span></label>
-                                            <select name="city" id="city" class="form-select" data-value="{{ $profile->city ?? '' }}" required>
+                                            <select name="city" id="city" class="form-select" data-value="{{ old('city') }}" required>
                                                 <option value="">Select an option</option>
                                             </select>
                                         </div>
@@ -150,10 +150,10 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-6 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="barangay">Barangay <span class="text-danger">*</span></label>
-                                            <select name="barangay" id="barangay" class="form-select" data-value="{{ $profile->barangay ?? '' }}" required>
+                                            <select name="barangay" id="barangay" class="form-select" data-value="{{ old('barangay') }}" required>
                                                 <option value="">Select an option</option>
                                             </select>
                                         </div>
@@ -163,10 +163,10 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group text-left mb-3">
+                                    <div class="col-md-12 text-left">
+                                        <div class="form-group mb-3">
                                             <label for="street">Purok/Street/Subd. <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="street" id="street" placeholder="Street / Subd." value="{{ $profile->street ?? '' }}" required />
+                                            <input type="text" class="form-control" name="street" id="street" placeholder="Street / Subd." value="{{ old('street') }}" required />
                                         </div>
                                         @if ($errors->has('street'))
                                             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -181,7 +181,7 @@
                                                 <input class="form-check-input" name="agree_terms_and_conditions" type="checkbox">
                                                 <span class="form-check-sign"></span>
                                                     {{ __('I agree to the') }}
-                                                <a href="#something">{{ __('terms and conditions') }}</a>.
+                                                <a href="{{ route('terms.condition') }}" target="_blank">{{ __('terms and conditions') }}</a>.
                                             </label>
                                             @if ($errors->has('agree_terms_and_conditions'))
                                                 <span class="invalid-feedback" style="display: block;" role="alert">
@@ -288,7 +288,7 @@
                                         <input class="form-check-input" name="agree_terms_and_conditions" type="checkbox">
                                         <span class="form-check-sign"></span>
                                             {{ __('I agree to the') }}
-                                        <a href="#something">{{ __('terms and conditions') }}</a>.
+                                    <a href="{{ route('terms.condition') }}">{{ __('terms and conditions') }}</a>.
                                     </label>
                                     @if ($errors->has('agree_terms_and_conditions'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
@@ -314,85 +314,5 @@
             demo.checkFullPageBackgroundImage();
         });
     </script>
-    
-    <script>
-        const regions = {{ Js::from($regions) }};
-        const provinces = {{ Js::from($provinces) }};
-        const cities = {{ Js::from($cities) }};
-        const barangays = {{ Js::from($barangays) }};
-
-        $(document).ready(function () {
-            $('#region').on('change', function () {
-                var region_code = $(this).val();
-
-                $('#province').val('').trigger('change');
-                $('#province').html('<option value="">Select an option</option>');
-                if (region_code !== '') {
-                    var options = provinces.filter((province) => {
-                        return province.region_code == region_code;
-                    });
-
-                    $.each(options, function (key, option) {
-                        $('#province').append(`<option value="${option.province_code}">${option.province_name}</option>`)
-                    });
-                }
-            });
-            if ($('#region').data('value')) {
-                var region = regions.find((region) => {
-                    return region.region_name == $("#region").data('value');
-                });
-                $('#region').val(region.region_code).trigger('change');
-            }
-
-            $('#province').on('change', function () {
-                var province_code = $(this).val();
-
-                $('#city').val('').trigger('change');
-                $('#city').html('<option value="">Select an option</option>');
-                if (province_code !== '') {
-                    var options = cities.filter((city) => {
-                        return city.province_code == province_code;
-                    });
-                    $.each(options, function (key, option) {
-                        $('#city').append(`<option value="${option.city_code}">${option.city_name}</option>`)
-                    });
-                }
-            });
-            if ($('#province').data('value')) {
-                var province = provinces.find((province) => {
-                    return province.province_name == $("#province").data('value') && province.region_code == $('#region').val();
-                });
-                $('#province').val(province.province_code).trigger('change');
-            }
-            
-            $('#city').on('change', function () {
-                var city_code = $(this).val();
-
-                $('#barangay').val('').trigger('change');
-                $('#barangay').html('<option value="">Select an option</option>');
-                if (city_code !== '') {
-                    var options = barangays.filter((barangay) => {
-                        return barangay.city_code == city_code;
-                    });
-
-                    $.each(options, function (key, option) {
-                        $('#barangay').append(`<option value="${option.brgy_code}">${option.brgy_name}</option>`)
-                    });
-                }
-            });
-            if ($('#city').data('value')) {
-                var city = cities.find((city) => {
-                    return city.city_name == $("#city").data('value') && city.province_code == $('#province').val();
-                });
-                $('#city').val(city.city_code).trigger('change');
-            }
-
-            if ($('#barangay').data('value')) {
-                var barangay = barangays.find((barangay) => {
-                    return barangay.brgy_name == $("#barangay").data('value') && barangay.city_code == $('#city').val();
-                });
-                $('#barangay').val(barangay.brgy_code);
-            }
-        });
-    </script>
+    @include('components.address-js')
 @endpush

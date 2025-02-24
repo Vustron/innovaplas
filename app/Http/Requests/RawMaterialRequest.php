@@ -22,15 +22,10 @@ class RawMaterialRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['required', 'unique:raw_materials,name'],
+            'name' => ['required'],
             // 'batch_number' => ['required'],
             // 'quantity' => ['required', 'integer'],
         ];
-
-        $id = $this->route('id');
-        if (!empty($id)) {
-            $rules['name'] = ['required', 'unique:raw_materials,name,'.$id];
-        }
 
         return $rules;
     }
