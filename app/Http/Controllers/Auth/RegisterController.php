@@ -8,6 +8,7 @@ use Illuminate\Http\Request; // Import the correct Request class
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -76,8 +77,6 @@ class RegisterController extends Controller
             'barangay' => $barangay,
             'street' => $data['street'] ?? '',
         ]);
-
-        $user->sendEmailVerificationNotification();
 
         return $user;
     }

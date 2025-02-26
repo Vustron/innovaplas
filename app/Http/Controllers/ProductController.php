@@ -68,7 +68,7 @@ class ProductController extends Controller
     {
         $product = Product::with(['raw_materials'])->find($id);
         if(empty($product)) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Product does not exists.']);
         }
         if ($product->is_customize) {
             $quantity = null;
@@ -87,16 +87,39 @@ class ProductController extends Controller
         }
         
         $feedbacks = Feedback::where('product_id', $product->id)->inRandomOrder()->paginate(5);
-        $products = Product::where('is_customize', $product->is_customize)->where('id', '!=', $product->id)->inRandomOrder()->limit(6)->get();
+        $products = Product::leftJoin('product_raw_materials as prm', 'prm.product_id', 'products.id')
+                           ->leftJoin('raw_materials as rm', 'rm.id', 'prm.raw_material_id')
+                           ->where('products.id', '!=', $product->id)
+                           ->where('is_customize', $product->is_customize)
+                           ->where(function ($res) {
+                                $res->where(function ($query) {
+                                    $query->where('products.is_customize', false)
+                                        ->where('products.quantity', '>', 0);
+                                })->orWhere(function ($query) {
+                                        $query->where('products.is_customize', true)
+                                            ->whereRaw("NOT EXISTS (
+                                                SELECT 1
+                                                FROM product_raw_materials prm_sub
+                                                JOIN raw_materials rm_sub ON rm_sub.id = prm_sub.raw_material_id
+                                                WHERE prm_sub.product_id = products.id
+                                                AND rm_sub.quantity < prm_sub.count
+                                            )");
+                                });
+                           })
+                           ->select(['products.*'])
+                           ->distinct()
+                           ->inRandomOrder()
+                           ->limit(6)
+                           ->get();
         return view('products.show', compact('product', 'products', 'feedbacks'));
     }
 
     public function checkout($id)
     {
         $product = Product::with(['raw_materials'])->find($id);
-        if(empty($product) || $product->quantity < 300) {
-            abort(404);
-        }
+        // if(empty($product) || $product->quantity < 300) {
+        //     abort(404);
+        // }
         if ($product->is_customize) {
             $quantity = null;
             foreach ($product->raw_materials as $raw_material) {
@@ -113,7 +136,7 @@ class ProductController extends Controller
             $product->quantity = $quantity ?? 0;
         }
         if($product->quantity == 0) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Product does not exists.']);
         }
 
         $regions = json_decode(file_get_contents(public_path('json/region.json')));
@@ -128,7 +151,7 @@ class ProductController extends Controller
     {
         $product = Product::with(['raw_materials'])->find($id);
         if(empty($product)) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Product does not exists.']);
         }
 
         if ($request->hasFile('design')) {

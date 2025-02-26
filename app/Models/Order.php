@@ -15,22 +15,32 @@ class Order extends Model
     
         static::created(function ($item) {
             Cache::forget('pending');
+            Cache::forget('to_pay');
             Cache::forget('to_review');
             Cache::forget('on_process');
             Cache::forget('to_deliver');
+            Cache::forget('rejected');
+            Cache::forget('completed');
         });
 
         static::updated(function ($item) {
             Cache::forget('pending');
+            Cache::forget('to_pay');
             Cache::forget('to_review');
             Cache::forget('on_process');
             Cache::forget('to_deliver');
+            Cache::forget('rejected');
+            Cache::forget('completed');
         });
     }
 
     protected $guarded = [];
 
     protected $appends = ['reference'];
+
+    protected $casts = [
+        'estimate_delivery' => 'date'
+    ];
 
     public function getReferenceAttribute()
     {

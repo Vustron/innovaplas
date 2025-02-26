@@ -20,7 +20,7 @@ class RawMaterialController extends Controller
             $datatables = datatables()::of($materials);
 
             $datatables->editColumn('updated_at', function ($item) {
-                return $item->updated_at->format('m/d/Y');
+                return $item->updated_at->format('M d, Y');
             })->addColumn('edit_route', function ($item) {
                 return route('admin.material.update', $item->id);
             })->addColumn('actions', function ($item) {
@@ -67,11 +67,11 @@ class RawMaterialController extends Controller
         if ($request->ajax()) {
             $keyword = $request->search['value'];
 
-            $materials = RawMaterialBatch::query();
+            $materials = RawMaterialBatch::where('raw_material_id', $id);
             $datatables = datatables()::of($materials);
 
             $datatables->editColumn('updated_at', function ($item) {
-                return $item->updated_at->format('m/d/Y');
+                return $item->updated_at->format('M d, Y');
             })->addColumn('edit_route', function ($item) {
                 return route('admin.material.update', $item->id);
             })->addColumn('actions', function ($item) {
@@ -100,7 +100,7 @@ class RawMaterialController extends Controller
 
         $raw_material = RawMaterial::find($id);
         if (empty($raw_material)) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Raw material does not exists.']);
         }
 
         return view('admin.raw-material.edit', compact('raw_material'));
@@ -110,7 +110,7 @@ class RawMaterialController extends Controller
     {
         $material = RawMaterial::find($id);
         if (empty($material)) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Raw material does not exists.']);
         }
                
         $material->name = $request->input('name');
@@ -125,7 +125,7 @@ class RawMaterialController extends Controller
     {
         $material = RawMaterial::find($id);
         if (empty($material)) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Raw material does not exists.']);
         }
 
         RawMaterialBatch::where('raw_material_id', $material->id)->delete();
@@ -138,13 +138,14 @@ class RawMaterialController extends Controller
     {
         $material = RawMaterial::find($id);
         if (empty($material)) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Raw material does not exists.']);
         }
 
         RawMaterialBatch::create([
             'raw_material_id' => $material->id,
             'batch_number' => $request->input('batch_number'),
-            'quantity' => $request->input('quantity')
+            'quantity' => $request->input('quantity'),
+            'total_quantity' => $request->input('quantity')
         ]);
 
         $material->quantity += $request->input('quantity');
@@ -158,7 +159,7 @@ class RawMaterialController extends Controller
         $material = RawMaterial::find($id);
         $batch = RawMaterialBatch::find($batch_id);
         if (empty($material) || empty($batch) || $batch->raw_material_id !== $material->id) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Raw material batch does not exists.']);
         }
 
         $old_quantity = $batch->quantity;
@@ -178,7 +179,7 @@ class RawMaterialController extends Controller
         $material = RawMaterial::find($id);
         $batch = RawMaterialBatch::find($batch_id);
         if (empty($material) || empty($batch) || $batch->raw_material_id !== $material->id) {
-            abort(404);
+            return redirect()->back()->withErrors(['message' => 'Raw material batch does not exists.']);
         }
 
         $material->quantity -= $batch->quantity;
