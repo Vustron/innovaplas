@@ -13,18 +13,16 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $products = Product::where('is_customize', 0)
+        $ls_products = Product::where('is_customize', 0)
                            ->where('quantity', '<', config('app.threshold'))
                            ->distinct()
-                           ->limit(5)
                            ->get();
 
-        $materials = RawMaterial::where('quantity', '<', config('app.threshold'))
+        $ls_materials = RawMaterial::where('quantity', '<', config('app.threshold'))
                             ->distinct()
-                            ->limit(5)
                             ->get();
         
-        $orders = Order::where('order_status_id', 1)->limit(5)->get();
+        $pending_orders = Order::where('order_status_id', 1)->get();
         
         $cards = [
             'orders' => Order::whereDate('created_at', now())->count(),
@@ -113,6 +111,6 @@ class HomeController extends BaseController
             $sales['last_year'][$name] = $lastYearSales->get($num, 0);
         }
 
-        return view('admin.dashboard', compact('products', 'materials', 'orders', 'cards', 'sales'));
+        return view('admin.dashboard', compact('ls_products', 'ls_materials', 'pending_orders', 'cards', 'sales'));
     }
 }

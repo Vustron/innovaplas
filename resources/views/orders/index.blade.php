@@ -5,25 +5,33 @@
 ])
 
 @section('content')
-    <div class="content mt-4">
-        <div class="container">
+    <div class="content">
+        <div class="container-fluid">
             <div class="row mb-4">
-                <div class="col-md-12">
-                    <h3 class="fw-bold">Orders</h3>
+                <div class="col-12 d-flex align-items-center justify-content-center bg-primary" style="height: 200px">
+                    <div class="text-center">
+                        <h3 class="text-white mb-2">My Orders</h3>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col-12 d-flex flex-wrap gap-md-2 justify-content-md-end justify-content-center btn-filter-group">
-                    <button class="btn btn-primary my-0" data-filter="*">Show All</button>
-                    @foreach ($statuses as $status)
-                        @php
-                            $slug = strtolower(str_replace(' ', '-', $status->name));
-                        @endphp
-                        <button class="btn btn-secondary my-0 position-relative" data-filter=".{{ $slug }}">
-                            {!! !empty($orders_count[str_replace('-', '_', $slug)]) ? '<span class="badge badge-danger p-1 border position-absolute end-0 top-50 translate-middle-y">'.$orders_count[str_replace('-', '_', $slug)].'</span>' : '' !!}
-                            {{ $status->name }}
-                        </button>
-                    @endforeach
+        </div>
+        <div class="container">
+            <div class="row mb-4 justify-content-md-end">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-select" id="order-filter">
+                            <option value="*">Show All</option>
+                            @foreach ($statuses as $status)
+                                @php
+                                    $slug = strtolower(str_replace(' ', '-', $status->name));
+                                @endphp
+                                <option value=".{{ $slug }}">
+                                    {{ $status->name }} 
+                                    {!! !empty($orders_count[str_replace('-', '_', $slug)]) ? "(".$orders_count[str_replace('-', '_', $slug)].")" : '' !!}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="row order-list">
@@ -70,12 +78,9 @@
                 masonry: true
             });
 
-            $('.btn-filter-group').on('click', '.btn', function () {
-                var filterValue = $(this).attr('data-filter');
+            $('#order-filter').on('change', function () {
+                var filterValue = $(this).val();
                 $list.isotope({ filter: filterValue });
-
-                $('.btn-filter-group').find('.btn').removeClass('btn-primary').addClass('btn-secondary');
-                $(this).removeClass('btn-secondary').addClass('btn-primary');
             });
         });
     </script>

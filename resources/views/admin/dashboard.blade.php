@@ -138,12 +138,15 @@
                     <div class="row">
                         <div class="col-md-6 col-lg-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Low Stock Products</h4>
+                                <div class="card-header position-relative">
+                                    <h4 class="card-title ps-3">Low Stock Products ({{ count($ls_products) }})</h4>
+                                    @if (count($ls_products))
+                                        <i class="fa-solid fa-exclamation position-absolute display-6 text-danger fw-bolder" style="top: 15px; left: 15px;"></i>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group">
-                                        @forelse ($products as $product)
+                                        @forelse ($ls_products->take(5) as $product)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger-subtle">
                                                 {{ $product->name }} ({{ $product->quantity }})
                                             </li>
@@ -165,11 +168,14 @@
                         <div class="col-md-6 col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Low Stock Raw Materials</h4>
+                                    <h4 class="card-title ps-3">Low Stock Raw Materials ({{ count($ls_materials) }})</h4>
+                                    @if (count($ls_materials))
+                                        <i class="fa-solid fa-exclamation position-absolute display-6 text-danger fw-bolder" style="top: 15px; left: 15px;"></i>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group">
-                                        @forelse ($materials as $material)
+                                        @forelse ($ls_materials->take(5) as $material)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger">
                                                 {{ $material->name }} ({{ $material->quantity }})
                                             </li>
@@ -191,11 +197,14 @@
                         <div class="col-md-6 col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Pending Orders</h4>
+                                    <h4 class="card-title ps-3">Pending Orders ({{ count($pending_orders) }})</h4>
+                                    @if (count($pending_orders))
+                                        <i class="fa-solid fa-exclamation position-absolute display-6 text-warning fw-bolder" style="top: 15px; left: 15px;"></i>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group">
-                                        @forelse ($orders as $order)
+                                        @forelse ($pending_orders->take(5) as $order)
                                             <li class="list-group-item mb-0 d-flex flex-wrap justify-content-between align-items-center border-warning">
                                                 {{ $order->product->name }} - ({{ $order->status->name }}) 
                                                 <span>
@@ -226,11 +235,14 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Low Stock Products</h4>
+                                    <h4 class="card-title ps-3">Low Stock Products ({{ count($ls_products) }})</h4>
+                                    @if (count($ls_products))
+                                        <i class="fa-solid fa-exclamation position-absolute display-6 text-danger fw-bolder" style="top: 15px; left: 15px;"></i>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group">
-                                        @forelse ($products as $product)
+                                        @forelse ($ls_products->take(5) as $product)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger-subtle">
                                                 {{ $product->name }} ({{ $product->quantity }})
                                             </li>
@@ -252,11 +264,14 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Low Stock Raw Materials</h4>
+                                    <h4 class="card-title ps-3">Low Stock Raw Materials ({{ count($ls_materials) }})</h4>
+                                    @if (count($ls_materials))
+                                        <i class="fa-solid fa-exclamation position-absolute display-6 text-danger fw-bolder" style="top: 15px; left: 15px;"></i>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group">
-                                        @forelse ($materials as $material)
+                                        @forelse ($ls_materials->take(5) as $material)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger">
                                                 {{ $material->name }} ({{ $material->quantity }})
                                             </li>
@@ -278,11 +293,14 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Pending Orders</h4>
+                                    <h4 class="card-title ps-3">Pending Orders ({{ count($pending_orders) }})</h4>
+                                    @if (count($pending_orders))
+                                        <i class="fa-solid fa-exclamation position-absolute display-6 text-warning fw-bolder" style="top: 15px; left: 15px;"></i>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group">
-                                        @forelse ($orders as $order)
+                                        @forelse ($pending_orders->take(5) as $order)
                                             <li class="list-group-item mb-0 d-flex flex-wrap justify-content-between align-items-center border-warning">
                                                 {{ $order->product->name }} - ({{ $order->status->name }}) 
                                                 <span>
