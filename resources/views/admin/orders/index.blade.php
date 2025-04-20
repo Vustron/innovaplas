@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="order-table">
+                        <table class="table table-striped" id="order-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Order Reference</th>

@@ -31,7 +31,7 @@
                                         <p>{{ $product->description }}</p>
                                         {{-- @if (!$product->is_customize) --}}
                                         <h6>Available Quantity</h6>
-                                        <p>{{ $product->quantity }}</p>
+                                        <p>{{ number_format($product->quantity) }} pcs.</p>
                                         {{-- @endif --}}
                                         <h6>Price</h6>
                                         <p>₱{{ number_format($product->price, 2) }}</p>
@@ -54,7 +54,7 @@
                                             <select class="form-control js-select2" data-tags="true" id="size" name="size" placeholder="Size" required>
                                                 <option value="">Select an option or Input preferred size...</option>
                                                 @foreach (json_decode($product->sizes ?? '[]') as $size)
-                                                    <option placeholder ='Input preferred size'value="{{ $size }}" {{ old('size') == $size ? 'selected' : '' }}>{{ $size }}</option>
+                                                    <option value="{{ $size }}" {{ old('size') == $size ? 'selected' : '' }}>{{ $size }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('size'))
@@ -89,8 +89,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label for="note">Note</label>
-                                                <textarea class="form-control" id="note" name="note" placeholder="Note">{{ old('note') }}</textarea>
+                                                <label for="note">Note (optional)</label>
+                                                <textarea class="form-control" id="note" name="note" placeholder="Note (optional)">{{ old('note') }}</textarea>
                                                 @if ($errors->has('note'))
                                                     <span class="invalid-feedback" style="display: block;" role="alert">
                                                         <strong>{{ $errors->first('note') }}</strong>
@@ -176,7 +176,7 @@
                                         <div class="ms-auto w-25">
                                             <div class="d-flex gap-2 justify-content-end align-items-end">
                                                 <p class="mb-0"><i>Avialable Quantity:</i></p>
-                                                <h5 class="mb-0">{{ $product->quantity }}</h5>
+                                                <h5 class="mb-0">{{ number_format($product->quantity) }} pcs.</h5>
                                             </div>
                                             <div class="form-group text-left mb-3">
                                                 <label for="quantity">Quantity <span class="text-danger">*</span></label>

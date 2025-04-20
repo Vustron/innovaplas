@@ -16,7 +16,7 @@
                         <h4 class="card-title">{{ $product->name }} - Feedbacks</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="feedback-table">
+                        <table class="table table-striped" id="feedback-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>User</th>

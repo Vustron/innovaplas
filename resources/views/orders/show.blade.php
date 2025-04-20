@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h6>Quantity</h6>
-                                    <p>{{ $order->quantity }}</p>
+                                    <p>{{ number_format($order->quantity) }} pcs.</p>
                                 </div>
                                 <div class="col-md-6">
                                     <h6>Size</h6>
@@ -296,7 +296,7 @@
                                     </div>
                                     
                                     <hr>
-                                    <p><i class="fa fa-info-circle"></i> <strong>IMPORTANT:</strong> Please ensure you send the exact amount required. We cannot process refunds for incorrect payments. Double-check your payment before completing the transaction. Thank you for your understanding!</p>
+                                    <p><i class="fa fa-info-circle"></i> <strong>IMPORTANT:</strong> Please ensure you send the exact amount required. <strong>NO REFUNDS</strong> will be issued for incorrect payments. Double-check your payment before completing the transaction. Thank you for your understanding!</p>
                                 </div>
                                 <div class="col-lg-6">
                                         <div class="type_details">

@@ -11,10 +11,16 @@
         <tr>
             <th style="border: 1px solid black; font-weight: 800;">Current Date</th>
             <td style="border: 1px solid black;">{{ now()->format('M d, Y') }}</td>
+            <th></th>
+            <th style="border: 1px solid black; font-weight: 800;">Product Type</th>
+            <td style="border: 1px solid black;">{{ ucwords($sales_type ?? '') }}</td>
         </tr>
         <tr>
             <th style="border: 1px solid black; font-weight: 800;">Filtered Date</th>
             <td style="border: 1px solid black;">{{ $date ?? '' }}</td>
+            <th></th>
+            <th style="border: 1px solid black; font-weight: 800;">Payment Type</th>
+            <td style="border: 1px solid black;">{{ ucwords($payment_type ?? '') }}</td>
         </tr>
     </thead>
 </table>
@@ -41,7 +47,7 @@
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->name ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->thickness ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->size ?? '' }}</td>
-                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->quantity ?? '' }}</td>
+                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($order->quantity) ? number_format($order->quantity) . ' pcs.' : '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->price ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->total ?? '' }}</td>
             </tr>
@@ -64,3 +70,5 @@
         @endforeach
     </tbody>
 </table>
+
+@include('components.export-signature', ['column' => 7])

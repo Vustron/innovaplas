@@ -13,7 +13,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead class=" text-primary">
                                     <th>
                                         Name
@@ -141,7 +141,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead class=" text-primary">
                                     <th>
                                         Name

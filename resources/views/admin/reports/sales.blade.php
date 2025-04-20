@@ -20,9 +20,14 @@
                             <div class="d-flex gap-2">
                                 <input type="text" id="date" name="date" class="form-control" placeholder="Date" value="" autocomplete="off" form="exportSales">
                                 <select id="sales_type" name="sales_type" class="form-select" form="exportSales">
-                                    <option value="">Select an Option</option>
+                                    <option value="">Select a Product Type</option>
                                     <option value="generic">Generic Product</option>
                                     <option value="customized">Customized</option>
+                                </select>
+                                <select id="payment_type" name="payment_type" class="form-select" form="exportSales">
+                                    <option value="">Select a Payment Type</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="g-cash">G-Cash</option>
                                 </select>
                                 {{-- <input type="text" id="start" class="form-control" placeholder="Start Date">
                                 <input type="text" id="end" class="form-control" placeholder="End Date"> --}}
@@ -34,7 +39,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="report-table">
+                        <table class="table table-striped" id="report-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Product Name</th>
@@ -85,7 +90,8 @@
                     data: function (d) {
                         return $.extend({}, d, {
                             date: $('#date').val(),
-                            sales_type: $('#sales_type').val()
+                            sales_type: $('#sales_type').val(),
+                            payment_type: $('#payment_type').val(),
                         });
                     }
                 },
@@ -119,6 +125,10 @@
             });
 
             $('#sales_type').on('change', function () {
+                table.draw();
+            });
+
+            $('#payment_type').on('change', function () {
                 table.draw();
             });
 

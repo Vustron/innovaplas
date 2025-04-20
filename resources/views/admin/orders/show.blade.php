@@ -136,7 +136,7 @@
                             </div>
                             <div class="col-md-6">
                                 <h6>Quantity</h6>
-                                <p>{{ $order->quantity }}</p>
+                                <p>{{ number_format($order->quantity) }} pcs.</p>
                             </div>
                             @if (!empty($order->size))
                                 <div class="col-md-6">
@@ -163,7 +163,7 @@
                                 @endif
                             @endif
                         </div>
-                        @if (!empty($order->payment_reference) || !empty($order->payment))
+                        @if (!empty($order->payment_reference) || !empty($order->payment) || !empty($order->payment_type))
                             <hr>
                             <div class="row mt-4">
                                 <div class="col-md-12">

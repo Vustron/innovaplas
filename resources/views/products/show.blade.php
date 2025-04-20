@@ -27,7 +27,7 @@
                                     <p>{{ $product->description }}</p>
                                     {{-- @if (!$product->is_customize) --}}
                                         <h6>Quantity</h6>
-                                        <p>{{ $product->quantity }}</p>
+                                        <p>{{ number_format($product->quantity) }} pcs.</p>
                                     {{-- @endif --}}
                                     <h6>Price</h6>
                                     <p>₱{{ number_format($product->price, 2) }}</p>

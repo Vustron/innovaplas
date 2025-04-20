@@ -15,7 +15,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive table-upgrade">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead>
                                     <th></th>
                                     <th class="text-center">Free</th>

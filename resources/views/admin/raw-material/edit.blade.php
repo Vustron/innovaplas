@@ -29,7 +29,7 @@
                                 @endif
                             </div>
                             <div class="form-group mb-3">
-                                <label for="quantity">Quantity</label>
+                                <label for="quantity">Quantity (pcs.)</label>
                                 <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity" value="{{ $raw_material->quantity ?? 0 }}" readonly />
                             </div>
 
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="batches-table">
+                        <table class="table table-striped" id="batches-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Batch Number</th>

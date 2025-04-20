@@ -29,6 +29,7 @@ class ReportController extends Controller
             // $end = $request->end;
             [$start, $end] = explode(' - ', $request->date ?? ' - ');
             $sales_type = $request->sales_type;
+            $payment_type = $request->payment_type;
 
             $orders = Order::leftJoin('products as p', 'p.id', 'orders.product_id')
                              ->leftJoin('order_statuses as os', 'os.id', 'orders.order_status_id')
@@ -46,6 +47,15 @@ class ReportController extends Controller
                              ->where(function ($query) use ($sales_type) {
                                 if (!empty($sales_type)) {
                                     $query->where('p.is_customize', $sales_type !== 'generic');
+                                }
+                             })
+                             ->where(function ($query) use ($payment_type) {
+                                if (!empty($payment_type)) {
+                                    if ($payment_type == 'cash') {
+                                        $query->where('orders.payment_type', 'Cash');
+                                    } else {
+                                        $query->where('orders.payment_type', '!=', 'Cash');
+                                    }
                                 }
                              })
                              ->select([
@@ -87,6 +97,7 @@ class ReportController extends Controller
         // $keyword = $request->search['value'];
         [$start, $end] = explode(' - ', $request->date ?? ' - ');
         $sales_type = $request->sales_type;
+        $payment_type = $request->payment_type;
         $keyword = $request->keyword;
 
         $orders = Order::leftJoin('products as p', 'p.id', 'orders.product_id')
@@ -105,6 +116,15 @@ class ReportController extends Controller
                          ->where(function ($query) use ($sales_type) {
                             if (!empty($sales_type)) {
                                 $query->where('p.is_customize', $sales_type !== 'generic');
+                            }
+                         })
+                         ->where(function ($query) use ($payment_type) {
+                            if (!empty($payment_type)) {
+                                if ($payment_type == 'cash') {
+                                    $query->where('orders.payment_type', 'Cash');
+                                } else {
+                                    $query->where('orders.payment_type', '!=', 'Cash');
+                                }
                             }
                          })
                          ->select([
@@ -135,10 +155,12 @@ class ReportController extends Controller
 
         $export_data = new SalesReport(
             $orders,
+            $sales_type,
+            $payment_type,
             $request->date,
         );
 
-        return Excel::download($export_data, 'sales.xlsx');
+        return Excel::download($export_data, 'sales-report.xlsx');
     }
 
     public function productInventory(Request $request)
@@ -315,6 +337,6 @@ class ReportController extends Controller
             $materials,
         );
 
-        return Excel::download($export_data, 'invoices.xlsx');
+        return Excel::download($export_data, 'inventory-report.xlsx');
     }
 }

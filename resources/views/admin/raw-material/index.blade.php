@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="raw-material-table">
+                        <table class="table table-striped" id="raw-material-table">
                             <thead class="text-primary">
                                 <tr>
                                     {{-- <th>Batch Number</th> --}}

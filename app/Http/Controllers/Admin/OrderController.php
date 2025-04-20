@@ -12,6 +12,10 @@ use App\Notifications\DefaultNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Models\ProductBatch;
 use App\Models\RawMaterialBatch;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Setting;
+use App\Models\File;
 
 class OrderController extends Controller
 {
@@ -222,5 +226,235 @@ class OrderController extends Controller
         $order->save();
 
         return redirect()->back()->with('message', 'Order status change to '. $status->name);
+    }
+
+    public function create()
+    {
+        $products = Product::leftJoin('product_raw_materials as prm', 'prm.product_id', 'products.id')
+                           ->leftJoin('raw_materials as rm', 'rm.id', 'prm.raw_material_id')
+                           ->where(function ($query) {
+                                $query->where('products.is_customize', false)
+                                      ->where('products.quantity', '>', 0);
+                           })->orWhere(function ($query) {
+                                $query->where('products.is_customize', true)
+                                    ->whereRaw("NOT EXISTS (
+                                        SELECT 1
+                                        FROM product_raw_materials prm_sub
+                                        JOIN raw_materials rm_sub ON rm_sub.id = prm_sub.raw_material_id
+                                        WHERE prm_sub.product_id = products.id
+                                        AND rm_sub.quantity < prm_sub.count
+                                    )");
+                           })
+                           ->select(['products.*'])
+                           ->distinct()
+                           ->get();
+
+        $regions = json_decode(file_get_contents(public_path('json/region.json')));
+        $provinces = json_decode(file_get_contents(public_path('json/province.json')));
+        $cities = json_decode(file_get_contents(public_path('json/city.json')));
+        $barangays = json_decode(file_get_contents(public_path('json/barangay.json')));
+        
+        $payments = Setting::where('slug', 'payments')->first();
+        $options = [];
+        if (!empty($payments)) {
+            $options = json_decode($payments->content);
+        }
+
+        $option = null;
+        foreach ($options as $option) {
+            if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
+                $option = $option;
+                break;
+            }
+        }
+
+        return view('admin.orders.create', compact('products', 'regions', 'provinces', 'cities', 'barangays', 'option'));
+    }
+
+    public function getProduct(Request $request)
+    {
+        if ($request->ajax() && !empty($request->product_id)) {
+            $product = Product::with(['raw_materials' => function ($query) { $query->with(['material']); }])->find($request->product_id);
+            
+            if (empty($product)) {
+                return response()->json(['error' => 'Product does not exists.'], 404);
+            }
+
+            $product->image_route = Storage::url($product->file->path);
+            if ($product->is_customize) {
+                $quantity = null;
+                foreach ($product->raw_materials as $raw_material) {
+                    $available = $raw_material->material->quantity;
+                    $needed = $raw_material->count;
+
+                    $possible = floor($available / $needed);
+
+                    if ($quantity == null || $possible < $quantity) {
+                        $quantity = $possible;
+                    }
+                }
+
+                $product->quantity = $quantity ?? 0;
+            }
+
+            if ($product->quantity == 0) {
+                return response()->json(['error' => 'Product does not exists.'], 404);
+            }
+
+            return response()->json(['product' => $product], 200);
+        }
+
+        abort(404);
+    }
+
+    public function store(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+            $product = Product::with(['raw_materials'])->find($request->product_id);
+            if(empty($product)) {
+                return redirect()->back()->withErrors(['message' => 'Product does not exists.']);
+            }
+
+            if ($request->hasFile('design')) {
+                $design = $request->file('design');
+                $path = Storage::disk('public')->put('/attachments/design', $design);
+                
+                $design_file = File::create([
+                    'file_name' => $design->getClientOriginalName(),
+                    'file_mime' => $design->getClientMimeType(),
+                    'path' => $path,
+                    'user_id' => auth()->user()->id
+                ]);
+            }
+            
+            if ($request->hasFile('payment')) {
+                $payment = $request->file('payment');
+                $path = Storage::disk('public')->put('/attachments/payment', $payment);
+                
+                $payment_file = File::create([
+                    'file_name' => $payment->getClientOriginalName(),
+                    'file_mime' => $payment->getClientMimeType(),
+                    'path' => $path,
+                    'user_id' => auth()->user()->id
+                ]);
+            }
+            
+            $regions = json_decode(file_get_contents(public_path('json/region.json')));
+            $provinces = json_decode(file_get_contents(public_path('json/province.json')));
+            $cities = json_decode(file_get_contents(public_path('json/city.json')));
+            $barangays = json_decode(file_get_contents(public_path('json/barangay.json')));
+
+            if (!empty($request->input('region'))) {
+                $region = array_filter($regions, function ($region) use ($request) {
+                        return $region->region_code == $request->input('region');    
+                    });
+                $region = reset($region)->region_name;
+            }
+            if (!empty($request->input('province'))) {
+                $province = array_filter($provinces, function ($province) use ($request) {
+                        return $province->province_code == $request->input('province');    
+                    });
+                $province = reset($province)->province_name;
+            }
+            if (!empty($request->input('city'))) {
+                $city = array_filter($cities, function ($city) use ($request) {
+                        return $city->city_code == $request->input('city');    
+                    });
+                $city = reset($city)->city_name;
+            }
+            if (!empty($request->input('barangay'))) {
+                $barangay = array_filter($barangays, function ($barangay) use ($request) {
+                        return $barangay->brgy_code == $request->input('barangay');    
+                    });
+                $barangay = reset($barangay)->brgy_name;
+            }
+
+            $total = $request->input('quantity') * $product->price;
+            $status = OrderStatus::where('name', 'Completed')->first();
+
+            $order = Order::create([
+                'order_status_id' => $status->id,
+                'region' => $region,
+                'province' => $province,
+                'city' => $city,
+                'barangay' => $barangay,
+                'street' => $request->input('street'),
+                'quantity' => $request->input('quantity'),
+                'total' => $total,
+                'product_id' => $product->id,
+                'thickness' => $request->input('thickness') ?? '',
+                'size' => $request->input('size') ?? '',
+                'note' => $request->input('note'),
+                'file_id' => $design_file->id ?? null,
+                'user_id' => auth()->user()->id,
+                'payment' => $payment_file->id ?? null,
+                'payment_reference' => $request->input('payment_reference') ?? '',
+                'payment_type' => $request->input('payment_type') ?? ''
+            ]);
+
+            $product = $order->product;
+            if (!$product->is_customize) {
+                $total_quantity = $order->quantity;
+                $product->quantity -= $total_quantity;
+                $product->last_deducted = now();
+                $product->save();
+
+                do {
+                    $batch = ProductBatch::where('quantity', '>', 0)->where('product_id', $product->id)->oldest()->first();
+                    if (empty($batch)) {
+                        return redirect()->back()->withErrors(['message' => 'Order does not exists.']);
+                    }
+
+                    $difference = min($batch->quantity, $total_quantity);
+                    $batch->quantity -= $difference;
+                    $total_quantity -= $difference;
+
+                    if ($batch->quantity < 0) {
+                        $batch->quantity = 0;
+                    }
+
+                    $batch->save();
+                } while ($total_quantity > 0);
+            } else {
+                foreach ($product->raw_materials as $material) {
+                    $total_quantity = ($material->count * $order->quantity);
+                    $raw_material = $material->material;
+                    $raw_material->quantity -= $total_quantity;
+                    $raw_material->last_deducted = now();
+                    $raw_material->save();
+
+                    do {
+                        $batch = RawMaterialBatch::where('quantity', '>', 0)->where('raw_material_id', $raw_material->id)->oldest()->first();
+                        if (empty($batch)) {
+                            return redirect()->back()->withErrors(['message' => 'Order does not exists.']);
+                        }
+    
+                        $difference = min($batch->quantity, $total_quantity);
+                        $batch->quantity -= $difference;
+                        $total_quantity -= $difference;
+    
+                        if ($batch->quantity < 0) {
+                            $batch->quantity = 0;
+                        }
+    
+                        $batch->save();
+                    } while ($total_quantity > 0);
+                }
+            }
+
+            if ($product->quantity < config('app.threshold')) {
+                // DB Notification
+                $users = User::where('is_admin', 1)->orWhere('is_staff', 1)->get();
+                $message = "The $product->name is low on stock.";
+                $link = route('admin.product.edit', $product->id);
+    
+                Notification::send(
+                    $users, 
+                    new DefaultNotification($message, $link)
+                );
+            }
+        });
+
+        return redirect()->route('admin.orders.list', 'completed')->with('message', 'Order successfully created.');
     }
 }

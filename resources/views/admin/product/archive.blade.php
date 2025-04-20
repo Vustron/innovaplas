@@ -16,7 +16,7 @@
                         <h4 class="card-title">Archived Products</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="archive-product-table">
+                        <table class="table table-striped" id="archive-product-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Design</th>

@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="product-table">
+                        <table class="table table-striped" id="product-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Design</th>
@@ -161,7 +161,7 @@
                 if ($this.val() !== '') {
                     var material = materials.find((item) => $this.val() == item.id);
                     if (material) {
-                        $this.closest('.material-item').find('.material_quantity').text(material.quantity);
+                        $this.closest('.material-item').find('.material_quantity').text(material.quantity.toLocaleString() + " pcs.");
                         return false;
                     }
                 }

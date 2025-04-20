@@ -21,7 +21,7 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        <table class="table" id="users-table">
+                        <table class="table table-striped" id="users-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>User Name</th>

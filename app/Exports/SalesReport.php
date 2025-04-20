@@ -14,13 +14,19 @@ class SalesReport implements FromView, WithEvents, ShouldAutoSize
     use Exportable;
 
     private $orders;
+    private $sales_type;
+    private $payment_type;
     private $date;
 
     public function __construct(
         $orders,
+        $sales_type,
+        $payment_type,
         $date
     ) {
         $this->orders = $orders;
+        $this->sales_type = $sales_type;
+        $this->payment_type = $payment_type;
         $this->date = $date;
     }
 
@@ -28,6 +34,8 @@ class SalesReport implements FromView, WithEvents, ShouldAutoSize
     {
         return view('admin.reports.sales-export', [
             'orders' => $this->orders,
+            'sales_type' => $this->sales_type,
+            'payment_type' => $this->payment_type,
             'date' => $this->date
         ]);
     }

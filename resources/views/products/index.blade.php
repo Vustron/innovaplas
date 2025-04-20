@@ -21,7 +21,7 @@
                             <h4 class="card-title">Products</h4>
                         </div>
                         <div class="card-body">
-                            <table class="table" id="product-table">
+                            <table class="table table-striped" id="product-table">
                                 <thead class="text-primary">
                                     <tr>
                                         <th>Product Name</th>
@@ -86,7 +86,7 @@
 
                 var modal = $('#viewProductModal');
                     modal.find('#viewProductLabel').text(data.name);
-                    modal.find('#quantity').text(data.quantity);
+                    modal.find('#quantity').text(data.quantity.toLocaleString() + " pcs.");
                     modal.find('#price').text(data.price);
                     modal.find('#description').text(data.description);
 

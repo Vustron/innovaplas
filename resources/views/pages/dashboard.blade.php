@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row mb-4">
                 <div class="col-md-3 d-flex align-items-center">
-                    <input type="text" class="form-control" id="search-product" placeholder="Search Product">
+                    <input type="search" class="form-control" id="search-product" placeholder="Search Product">
                 </div>
                 <div class="col-md-9 d-flex flex-wrap gap-md-3 justify-content-md-end justify-content-center btn-filter-group">
                     <button class="btn btn-primary" data-filter="*">Show All</button>

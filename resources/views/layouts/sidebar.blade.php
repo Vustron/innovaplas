@@ -113,6 +113,12 @@
                                     <span class="sidebar-normal">{{ __('All Orders') }}</span>
                                 </a>
                             </li>
+                            <li class="{{ request()->is('admin/orders/create') ? 'active' : '' }}">
+                                <a href="{{ route('admin.orders.create') }}">
+                                    <span class="sidebar-mini-icon">{{ __('CRO') }}</span>
+                                    <span class="sidebar-normal">{{ __('Create Order') }}</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

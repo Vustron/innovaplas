@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="report-table">
+                        <table class="table table-striped" id="report-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Product Name</th>

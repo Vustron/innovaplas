@@ -22,7 +22,7 @@
                         <h4 class="card-title">Generic Product Inventory</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="product-table" data-route="{{ route('admin.reports.product.inventory') }}">
+                        <table class="table table-striped" id="product-table" data-route="{{ route('admin.reports.product.inventory') }}">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Product Name</th>
@@ -46,7 +46,7 @@
                         <h4 class="card-title">Raw Materials Inventory</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="material-table" data-route="{{ route('admin.reports.material.inventory') }}">
+                        <table class="table table-striped" id="material-table" data-route="{{ route('admin.reports.material.inventory') }}">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Raw Material Name</th>
