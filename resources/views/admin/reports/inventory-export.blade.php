@@ -28,7 +28,7 @@
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->name ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->description ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->price ?? '' }}</td>
-                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($product->quantity) ? number_format($product->quantity) . ' pcs.' : '' }}</td>
+                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($product->quantity) ? number_format($product->quantity) . ' pcs' : '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->value ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->last_deducted ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->last_restock ?? '' }}</td>
@@ -54,7 +54,7 @@
         @foreach ($products as $key => $product)
             <tr>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->name ?? '' }}</td>
-                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($product->quantity) ? number_format($product->quantity) .' pcs.' : '' }}</td>
+                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($product->quantity) ? number_format($product->quantity) .' pcs' : '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->last_deducted ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $product->last_restock ?? '' }}</td>
             </tr>

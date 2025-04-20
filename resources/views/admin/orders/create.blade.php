@@ -303,7 +303,7 @@
                             $('#quantity').attr('max', data.product.quantity);
                             product_info.find('img').attr('src', data.product.image_route);
                             product_info.find('.description').html(data.product.description);
-                            product_info.find('.quantity').html(data.product.quantity.toLocaleString() + " pcs.");
+                            product_info.find('.quantity').html(data.product.quantity.toLocaleString() + " pcs");
                             product_info.find('.price').html('₱ ' + data.product.price.toFixed(2));
                             product_info.find('.raw-mat-list').addClass('d-none');
                             product_info.find('.raw-mat-list').find('.list-group').html('');

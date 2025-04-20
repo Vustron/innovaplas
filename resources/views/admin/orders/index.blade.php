@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped" id="order-table">
+                        <table class="table" id="order-table">
                             <thead class="text-primary">
                                 <tr>
                                     <th>Order Reference</th>
@@ -68,7 +68,9 @@
                 columns: [
                     {data: 'reference', name: 'reference', orderable: true, searchable: false},
                     {data: 'product_name', name: 'product_name', orderable: true, searchable: false},
-                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false},
+                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false, render: function(data, type, row) {
+                            return data + ' pcs';
+                        }},
                     {data: 'total', name: 'total', orderable: true, searchable: false},
                     {data: 'full_name', name: 'full_name', orderable: false, searchable: false},
                     {data: 'status', name: 'status', orderable: true, searchable: false},

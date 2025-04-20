@@ -29,7 +29,7 @@
                                 @endif
                             </div>
                             <div class="form-group mb-3">
-                                <label for="quantity">Quantity (pcs.)</label>
+                                <label for="quantity">Quantity (pcs)</label>
                                 <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity" value="{{ $raw_material->quantity ?? 0 }}" readonly />
                             </div>
 

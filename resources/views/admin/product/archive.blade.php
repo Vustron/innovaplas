@@ -54,7 +54,7 @@
                 columns: [
                     {data: 'design', name: 'design', orderable: false, searchable: false},
                     {data: 'name', name: 'name', orderable: true, searchable: false},
-                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false},
+                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false, render: function(data) { return data + ' pcs'; } },
                     {data: 'customize', name: 'customize', orderable: false, searchable: false},
                     {data: 'price', name: 'price', orderable: true, searchable: false},
                     {data: 'updated_at', name: 'updated_at', orderable: true, searchable: false},

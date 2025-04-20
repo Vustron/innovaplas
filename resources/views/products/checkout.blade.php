@@ -31,7 +31,7 @@
                                         <p>{{ $product->description }}</p>
                                         {{-- @if (!$product->is_customize) --}}
                                         <h6>Available Quantity</h6>
-                                        <p>{{ number_format($product->quantity) }} pcs.</p>
+                                        <p>{{ number_format($product->quantity) }} pcs</p>
                                         {{-- @endif --}}
                                         <h6>Price</h6>
                                         <p>₱{{ number_format($product->price, 2) }}</p>
@@ -176,7 +176,7 @@
                                         <div class="ms-auto w-25">
                                             <div class="d-flex gap-2 justify-content-end align-items-end">
                                                 <p class="mb-0"><i>Avialable Quantity:</i></p>
-                                                <h5 class="mb-0">{{ number_format($product->quantity) }} pcs.</h5>
+                                                <h5 class="mb-0">{{ number_format($product->quantity) }} pcs</h5>
                                             </div>
                                             <div class="form-group text-left mb-3">
                                                 <label for="quantity">Quantity <span class="text-danger">*</span></label>

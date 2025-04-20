@@ -47,7 +47,7 @@
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->name ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->thickness ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->size ?? '' }}</td>
-                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($order->quantity) ? number_format($order->quantity) . ' pcs.' : '' }}</td>
+                <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ !empty($order->quantity) ? number_format($order->quantity) . ' pcs' : '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->price ?? '' }}</td>
                 <td style="background-color: {{ ($key + 1) % 2 ? '' : '#dfdff8' }}; border: 1px solid black; width: 100%;">{{ $order->total ?? '' }}</td>
             </tr>

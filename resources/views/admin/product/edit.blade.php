@@ -53,7 +53,7 @@
                             </div>
                             @if (!$product->is_customize)
                                 <div class="form-group mb-3">
-                                    <label for="quantity">Quantity (pcs.)</label>
+                                    <label for="quantity">Quantity (pcs)</label>
                                     <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity" value="{{ $product->quantity ?? 0 }}" readonly />
                                 </div>
                             @endif
@@ -219,7 +219,7 @@
                                                         <div class="">
                                                             <div class="float-end d-flex gap-2">
                                                                 <h6 class="mb-0">Stock: </h6>
-                                                                <span class="material_quantity">{{ number_format($materials->where('id', $raw_material->raw_material_id)->first()->quantity ?? 0) }} pcs.</span>
+                                                                <span class="material_quantity">{{ number_format($materials->where('id', $raw_material->raw_material_id)->first()->quantity ?? 0) }} pcs</span>
                                                             </div>
                                                             <label for="materials_id[]">Material Type</label>
                                                         </div>
@@ -419,7 +419,7 @@
                 if ($this.val() !== '') {
                     var material = materials.find((item) => $this.val() == item.id);
                     if (material) {
-                        $this.closest('.material-item').find('.material_quantity').text(material.quantity.toLocaleString() + " pcs.");
+                        $this.closest('.material-item').find('.material_quantity').text(material.quantity.toLocaleString() + " pcs");
                         return false;
                     }
                 }

@@ -111,7 +111,7 @@
                 ajax: $('#material-table').data('route'),
                 columns: [
                     {data: 'name', name: 'name', orderable: true, searchable: false},
-                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false},
+                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false, render: function(data) { return data + 'pcs'; }  },
                     {data: 'last_deducted', name: 'last_deducted', orderable: true, searchable: false},
                     {data: 'last_restock', name: 'last_restock', orderable: true, searchable: false},
                 ],

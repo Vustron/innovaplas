@@ -148,7 +148,7 @@
                                     <ul class="list-group">
                                         @forelse ($ls_products->take(5) as $product)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger-subtle">
-                                                {{ $product->name }} ({{ number_format($product->quantity) }} pcs.)
+                                                {{ $product->name }} ({{ $product->quantity }} pcs)
                                             </li>
                                         @empty
                                             <li class="list-group-item mb-0 text-center">
@@ -177,7 +177,7 @@
                                     <ul class="list-group">
                                         @forelse ($ls_materials->take(5) as $material)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger">
-                                                {{ $material->name }} ({{ number_format($material->quantity) }} pcs)
+                                                {{ $material->name }} ({{ $material->quantity }} pcs)
                                             </li>
                                         @empty
                                             <li class="list-group-item mb-0 text-center">
@@ -244,7 +244,7 @@
                                     <ul class="list-group">
                                         @forelse ($ls_products->take(5) as $product)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger-subtle">
-                                                {{ $product->name }} ({{ number_format($product->quantity) }} pcs.)
+                                                {{ $product->name }} ({{ $product->quantity }} pcs)
                                             </li>
                                         @empty
                                             <li class="list-group-item mb-0 text-center">
@@ -273,7 +273,7 @@
                                     <ul class="list-group">
                                         @forelse ($ls_materials->take(5) as $material)
                                             <li class="list-group-item mb-0 d-flex align-items-center border-danger">
-                                                {{ $material->name }} ({{ number_format($material->quantity) }} pcs.)
+                                                {{ $material->name }} ({{ number_format($material->quantity) }} pcs)
                                             </li>
                                         @empty
                                             <li class="list-group-item mb-0 text-center">

@@ -61,7 +61,7 @@
                 columns: [
                     // {data: 'batch_number', name: 'batch_number', orderable: false, searchable: false},
                     {data: 'name', name: 'name', orderable: true, searchable: false},
-                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false},
+                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false, render: function(data) { return data + ' pcs'; } },
                     {data: 'updated_at', name: 'updated_at', orderable: false, searchable: false},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false, width: 190}
                 ],

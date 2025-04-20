@@ -100,7 +100,7 @@
                     {data: 'thickness', name: 'thickness', orderable: false, searchable: false},
                     {data: 'size', name: 'size', orderable: false, searchable: false},
                     {data: 'price', name: 'price', orderable: true, searchable: false},
-                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false},
+                    {data: 'quantity', name: 'quantity', orderable: true, searchable: false, render: function(data) { return data + ' pcs'; } },
                     {data: 'total', name: 'total', orderable: false, searchable: false},
                     {data: 'date_complete', name: 'date_complete', orderable: false, searchable: false},
                 ],

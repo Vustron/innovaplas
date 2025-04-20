@@ -86,7 +86,7 @@
 
                 var modal = $('#viewProductModal');
                     modal.find('#viewProductLabel').text(data.name);
-                    modal.find('#quantity').text(data.quantity.toLocaleString() + " pcs.");
+                    modal.find('#quantity').text(data.quantity.toLocaleString() + " pcs");
                     modal.find('#price').text(data.price);
                     modal.find('#description').text(data.description);
 

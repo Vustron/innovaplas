@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h6>Quantity</h6>
-                                    <p>{{ number_format($order->quantity) }} pcs.</p>
+                                    <p>{{ number_format($order->quantity) }} pcs</p>
                                 </div>
                                 <div class="col-md-6">
                                     <h6>Size</h6>
