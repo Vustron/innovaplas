@@ -73,15 +73,18 @@ class OrderController extends Controller
             $options = json_decode($payments->content);
         }
 
-        $option = null;
+        $gcash_payment = null;
+        $bank_payment = null;
         foreach ($options as $option) {
             if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
-                $option = $option;
-                break;
+                $gcash_payment = $option;
+            }
+            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'banktransfer'])) {
+                $bank_payment = $option;
             }
         }
 
-        return view('orders.show', compact('order', 'products', 'option'));
+        return view('orders.show', compact('order', 'products', 'gcash_payment', 'bank_payment'));
     }
 
     public function uploadPayment(Request $request, $id)

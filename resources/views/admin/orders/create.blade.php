@@ -122,6 +122,35 @@
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <h6>Customer  Information</h6>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="form-group text-left mb-3">
+                                        <label for="name">Name <span class="text-danger">*</span></label>
+                                        <input  type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ old('name') }}" required />
+                                        @if ($errors->has('name'))
+                                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="form-group text-left mb-3">
+                                        <label for="surname">Surname <span class="text-danger">*</span></label>
+                                        <input  type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ old('surname') }}" required />
+                                        @if ($errors->has('surname'))
+                                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                                <strong>{{ $errors->first('surname') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <h6>Delivery Address</h6>
                                 </div>
                                 <div class="col-md-6 text-left">

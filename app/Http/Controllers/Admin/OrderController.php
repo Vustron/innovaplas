@@ -16,6 +16,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Setting;
 use App\Models\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -217,10 +218,12 @@ class OrderController extends Controller
         }
         $link = route('user.order.show', $order->id);
 
-        Notification::send(
-            $order->user, 
-            new DefaultNotification($message, $link)
-        );
+        if (!$order->user->is_admin) {
+            Notification::send(
+                $order->user, 
+                new DefaultNotification($message, $link)
+            );
+        }
 
         $order->order_status_id = $status->id;
         $order->save();
@@ -309,7 +312,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        DB::transaction(function () use ($request) {
+        return DB::transaction(function () use ($request) {
             $product = Product::with(['raw_materials'])->find($request->product_id);
             if(empty($product)) {
                 return redirect()->back()->withErrors(['message' => 'Product does not exists.']);
@@ -370,7 +373,11 @@ class OrderController extends Controller
             }
 
             $total = $request->input('quantity') * $product->price;
-            $status = OrderStatus::where('name', 'Completed')->first();
+            if ($product->is_customize) {
+                $status = OrderStatus::where('name', 'Completed')->first();
+            } else {
+                $status = OrderStatus::where('name', 'On Process')->first();
+            }
 
             $order = Order::create([
                 'order_status_id' => $status->id,
@@ -389,7 +396,9 @@ class OrderController extends Controller
                 'user_id' => auth()->user()->id,
                 'payment' => $payment_file->id ?? null,
                 'payment_reference' => $request->input('payment_reference') ?? '',
-                'payment_type' => $request->input('payment_type') ?? ''
+                'payment_type' => $request->input('payment_type') ?? '',
+                'name' => $request->input('name') ?? '',
+                'surname' => $request->input('surname') ?? '',
             ]);
 
             $product = $order->product;
@@ -453,8 +462,20 @@ class OrderController extends Controller
                     new DefaultNotification($message, $link)
                 );
             }
-        });
 
-        return redirect()->route('admin.orders.list', 'completed')->with('message', 'Order successfully created.');
+            return redirect()->route('admin.order.show', ['id' => $order->id])->with('message', 'Order successfully created.');
+        });
+    }
+
+    public function export($id)
+    {
+        $order = Order::with(['product' => function ($query) {
+                $query->withTrashed();    
+            }, 'status', 'user'])->find($id);
+        if (empty($order)) {
+            return redirect()->back()->withErrors(['message' => 'Order does not exists.']);
+        }
+
+        return Pdf::loadView('pdf.order', compact('order'))->set_option("enable_php", true)->setPaper('A4', 'portrait')->stream('export.pdf');
     }
 }

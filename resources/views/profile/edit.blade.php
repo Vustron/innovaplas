@@ -37,7 +37,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group text-left mb-3">
                                             <label for="surname">Surname <span class="text-danger">*</span></label>
-                                            <input  type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ old('surname') }}" required />
+                                            <input  type="text" class="form-control" name="surname" id="surname" placeholder="Surname" value="{{ old('surname', $profile->surname ?? '') }}" required />
                                             @if ($errors->has('surname'))
                                                 <span class="invalid-feedback" style="display: block;" role="alert">
                                                     <strong>{{ $errors->first('surname') }}</strong>
@@ -49,7 +49,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group text-left mb-3">
                                             <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
-                                            <input  type="text" class="form-control" name="contact_number" id="contact_number" placeholder="Contact Number" value="{{ old('contact_number') }}" required />
+                                            <input  type="text" class="form-control" name="contact_number" id="contact_number" placeholder="Contact Number" value="{{ old('contact_number', $profile->contact_number ?? '') }}" required />
                                             @if ($errors->has('contact_number'))
                                                 <span class="invalid-feedback" style="display: block;" role="alert">
                                                     <strong>{{ $errors->first('contact_number') }}</strong>

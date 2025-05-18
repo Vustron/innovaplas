@@ -20,7 +20,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title">
+                        <h4 class="card-title w-100">
+                            <div class="float-right">
+                                <a href="{{ route('admin.order.export', $order->id) }}" target="_blank" class="btn btn-primary" style="font-size: small;">Download PDF</a>
+                            </div>
                             <div class="d-flex">
                                 <i class="nc-icon nc-basket me-3"></i>
                                 <div class="">
@@ -129,6 +132,10 @@
                                     <h6 class="mb-0">Order Reference: </h6>
                                     <p class="mb-0">{{ $order->reference }}</p>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Customer Name</h6>
+                                <p>{{ sprintf('%s %s', !empty($order->name) ? $order->name : ($order->user->profile->name ?? ''), !empty($order->surname) ? $order->surname : ($order->user->profile->surname ?? '')) }}</p>
                             </div>
                             <div class="col-md-6">
                                 <h6>Delivery Address</h6>

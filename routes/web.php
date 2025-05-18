@@ -106,9 +106,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 				Route::get('/get-product', [AdminOrderController::class, 'getProduct'])->name('orders.get.product');
 				Route::get('/create', [AdminOrderController::class, 'create'])->name('orders.create');
 				Route::post('/store', [AdminOrderController::class, 'store'])->name('orders.store');
-
+				
 				Route::get('/{status?}', [AdminOrderController::class, 'index'])->name('orders.list')->where('status', '[A-Za-z\W]+');
 				Route::get('/{id}', [AdminOrderController::class, 'show'])->name('order.show')->where('id', '[0-9]+');
+				Route::get('/{id}/export', [AdminOrderController::class, 'export'])->name('order.export')->where('id', '[0-9]+');
 
 				Route::post('/{status}/{id}', [AdminOrderController::class, 'changeStatus'])->name('order.change.status');
 			});

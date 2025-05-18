@@ -113,6 +113,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <h6>Customer Name</h6>
+                                    <p>{{ sprintf('%s %s', !empty($order->name) ? $order->name : ($order->user->profile->name ?? ''), !empty($order->surname) ? $order->surname : ($order->user->profile->surname ?? '')) }}</p>
+                                </div>
+                                <div class="col-md-6">
                                     <h6>Delivery Address</h6>
                                     <p>{{ $order->street .', '. $order->city .', '. $order->province .', '. $order->region }}</p>
                                 </div>
@@ -299,20 +303,35 @@
                                     <p><i class="fa fa-info-circle"></i> <strong>IMPORTANT:</strong> Please ensure you send the exact amount required. <strong>NO REFUNDS</strong> will be issued for incorrect payments. Double-check your payment before completing the transaction. Thank you for your understanding!</p>
                                 </div>
                                 <div class="col-lg-6">
-                                        <div class="type_details">
+                                    <div class="type_details d-none">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4 class="card-title">
-                                                    G-Cash
+                                                    <span class="gcash-payment d-none">G-Cash</span>
+                                                    @if (!empty($bank_payment))
+                                                        <span class="bank-payment d-none">Bank Transfer</span>
+                                                    @endif
                                                 </h4>
                                             </div>
                                             <div class="card-body text-center">
-                                                <div class="qr-display">
-                                                    @if (!empty($option->qr))
-                                                        <img src="{{ Storage::url($option->qr) }}" alt="Payment QR Code" style="width: 450px; height: 400px; object-fit: cover;">
-                                                    @endif
+                                                <div class="gcash-payment d-none">
+                                                    <div class="qr-display">
+                                                        @if (!empty($gcash_payment->qr))
+                                                            <img src="{{ Storage::url($gcash_payment->qr) }}" alt="Payment QR Code" style="width: 450px; height: 400px; object-fit: cover;">
+                                                        @endif
+                                                    </div>
+                                                    <h5 class="mt-3"><b>Account/Phone Number</b>: {{ $gcash_payment->number ?? '' }}</h5>
                                                 </div>
-                                                <h5 class="mt-3"><b>Account/Phone Number</b>: {{ $option->number ?? '' }}</h5>
+                                                @if (!empty($bank_payment))
+                                                    <div class="bank-payment d-none">
+                                                        <div class="qr-display">
+                                                            @if (!empty($bank_payment->qr))
+                                                                <img src="{{ Storage::url($bank_payment->qr) }}" alt="Payment QR Code" style="width: 450px; height: 400px; object-fit: cover;">
+                                                            @endif
+                                                        </div>
+                                                        <h5 class="mt-3"><b>Account/Phone Number</b>: {{ $bank_payment->number ?? '' }}</h5>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -530,8 +549,9 @@
             });
 
             $('#payment_type').on('change', function () {
+                var value = $(this).val();
+
                 if (options.length) {
-                    console.log('test');
                     $('.type_details').html('');
 
                     var value = $(this).val();
@@ -553,6 +573,17 @@
                                 </div>
                             </div>
                         `);
+                    }
+                } else {
+                    $('.type_details').addClass('d-none');
+                    $('.type_details').find('.gcash-payment').addClass('d-none');
+                    $('.type_details').find('.bank-payment').addClass('d-none');
+                    if (value == 'G-Cash' || !$('.type_details').find('.bank-payment').length) {
+                        $('.type_details').removeClass('d-none');
+                        $('.type_details').find('.gcash-payment').removeClass('d-none');
+                    } else if (value !== '') {
+                        $('.type_details').removeClass('d-none');
+                        $('.type_details').find('.bank-payment').removeClass('d-none');
                     }
                 }
             });

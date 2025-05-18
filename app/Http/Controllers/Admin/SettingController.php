@@ -17,15 +17,18 @@ class SettingController extends Controller
             $options = json_decode($payments->content);
         }
 
-        $option = null;
+        $gcash = null;
+        $bank_transfer = null;
         foreach ($options as $option) {
             if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
-                $option = $option;
-                break;
+                $gcash = $option;
+            }
+            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'banktransfer'])) {
+                $bank_transfer = $option;
             }
         }
 
-        return view('admin.settings.index', compact('option'));
+        return view('admin.settings.index', compact('gcash', 'bank_transfer'));
     }
 
     public function savePayments(Request $request)
