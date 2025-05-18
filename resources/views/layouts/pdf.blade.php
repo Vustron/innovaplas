@@ -28,9 +28,11 @@
             width: 100%;
         }
         table td, table th {
-            border: 1px solid #00000034;
             padding: 8px;
             font-size: 12px;
+        }
+        table .border {
+            border: 1px solid #00000034;
         }
         table tr {
             vertical-align: text-top;
