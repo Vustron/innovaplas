@@ -17,18 +17,9 @@ class SettingController extends Controller
             $options = json_decode($payments->content);
         }
 
-        $gcash = null;
-        $bank_transfer = null;
-        foreach ($options as $option) {
-            if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
-                $gcash = $option;
-            }
-            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'security-bank', 'security bank'])) {
-                $bank_transfer = $option;
-            }
-        }
+        $bank_transfer = !empty($options[0]) ? $options[0] : null;
 
-        return view('admin.settings.index', compact('gcash', 'bank_transfer'));
+        return view('admin.settings.index', compact('bank_transfer'));
     }
 
     public function savePayments(Request $request)
@@ -36,7 +27,7 @@ class SettingController extends Controller
         $validate = $request->validate([
             'data.*.bank' => 'required',
             'data.*.number' => 'required',
-            'data.*.qr' => 'required',
+            'data.*.qr' => 'required_without:data.*.previous_qr',
             'data.*.previous_qr' => 'nullable'
         ]);
 

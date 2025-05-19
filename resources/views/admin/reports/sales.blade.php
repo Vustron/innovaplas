@@ -27,7 +27,7 @@
                                 <select id="payment_type" name="payment_type" class="form-select" form="exportSales">
                                     <option value="">Select a Payment Type</option>
                                     <option value="cash">Cash</option>
-                                    <option value="g-cash">G-Cash</option>
+                                    <option value="bank">Bank Transfer</option>
                                 </select>
                                 {{-- <input type="text" id="start" class="form-control" placeholder="Start Date">
                                 <input type="text" id="end" class="form-control" placeholder="End Date"> --}}

@@ -73,18 +73,9 @@ class OrderController extends Controller
             $options = json_decode($payments->content);
         }
 
-        $gcash_payment = null;
-        $bank_payment = null;
-        foreach ($options as $option) {
-            if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
-                $gcash_payment = $option;
-            }
-            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'security bank', 'security-bank'])) {
-                $bank_payment = $option;
-            }
-        }
+        $bank_payment = !empty($options[0]) ? $options[0] : null;
 
-        return view('orders.show', compact('order', 'products', 'gcash_payment', 'bank_payment'));
+        return view('orders.show', compact('order', 'products', 'bank_payment'));
     }
 
     public function uploadPayment(Request $request, $id)

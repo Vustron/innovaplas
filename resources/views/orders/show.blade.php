@@ -303,38 +303,28 @@
                                     <p><i class="fa fa-info-circle"></i> <strong>IMPORTANT:</strong> Please ensure you send the exact amount required. <strong>NO REFUNDS</strong> will be issued for incorrect payments. Double-check your payment before completing the transaction. Thank you for your understanding!</p>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="type_details">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">
-                                                    <span class="gcash-payment d-none">G-Cash</span>
-                                                    @if (!empty($bank_payment))
+                                    @if (!empty($bank_payment))
+                                        <div class="type_details">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">
                                                         <span class="bank-payment">Bank Transfer</span>
-                                                    @endif
-                                                </h4>
-                                            </div>
-                                            <div class="card-body text-center">
-                                                <div class="gcash-payment d-none">
-                                                    <div class="qr-display">
-                                                        @if (!empty($gcash_payment->qr))
-                                                            <img src="{{ Storage::url($gcash_payment->qr) }}" alt="Payment QR Code" style="width: 450px; height: 400px; object-fit: cover;">
-                                                        @endif
-                                                    </div>
-                                                    <h5 class="mt-3"><b>Account/Phone Number</b>: {{ $gcash_payment->number ?? '' }}</h5>
+                                                    </h4>
                                                 </div>
-                                                @if (!empty($bank_payment))
+                                                <div class="card-body text-center">
                                                     <div class="bank-payment">
                                                         <div class="qr-display">
                                                             @if (!empty($bank_payment->qr))
                                                                 <img src="{{ Storage::url($bank_payment->qr) }}" alt="Payment QR Code" style="width: 450px; height: 400px; object-fit: cover;">
                                                             @endif
                                                         </div>
+                                                        <h5 class="mt-3"><b>Bank</b>: {{ $bank_payment->bank ?? '' }}</h5>
                                                         <h5 class="mt-3"><b>Account/Phone Number</b>: {{ $bank_payment->number ?? '' }}</h5>
                                                     </div>
-                                                @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
 
                                     {{-- <p class="text-center"><i>Click <a href="{{ route('user.payment.options') }}" target="_blank">here</a> to view payment options.</i></p> --}}
                                 </div>
