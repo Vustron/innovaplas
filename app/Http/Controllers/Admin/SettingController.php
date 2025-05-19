@@ -23,7 +23,7 @@ class SettingController extends Controller
             if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
                 $gcash = $option;
             }
-            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'banktransfer'])) {
+            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'security-bank', 'security bank'])) {
                 $bank_transfer = $option;
             }
         }

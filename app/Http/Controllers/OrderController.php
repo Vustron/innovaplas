@@ -79,7 +79,7 @@ class OrderController extends Controller
             if (in_array(strtolower($option->bank), ['gcash', 'g-cash'])) {
                 $gcash_payment = $option;
             }
-            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'banktransfer'])) {
+            if (in_array(strtolower($option->bank), ['bank transfer', 'bank-transfer', 'security bank', 'security-bank'])) {
                 $bank_payment = $option;
             }
         }

@@ -471,7 +471,10 @@ class OrderController extends Controller
     {
         $order = Order::with(['product' => function ($query) {
                 $query->withTrashed();    
-            }, 'status', 'user'])->find($id);
+            }, 'status', 'user'])
+            ->whereHas('status', function ($query) {
+                $query->where('name', 'Completed');
+            })->find($id);
         if (empty($order)) {
             return redirect()->back()->withErrors(['message' => 'Order does not exists.']);
         }

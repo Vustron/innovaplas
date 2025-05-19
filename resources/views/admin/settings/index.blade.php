@@ -82,7 +82,7 @@
                     </div> --}}
                     
                     <div class="row">
-                        <div class="payment-item col-md-4">
+                        {{-- <div class="payment-item col-md-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="qr-display">
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
     
                         <div class="payment-item col-md-4">
                             <div class="card">
@@ -118,20 +118,20 @@
                                     <div class="qr-display">
                                         @if (!empty($bank_transfer->qr))
                                             <img src="{{ Storage::url($bank_transfer->qr) }}" alt="Payment QR Code" style="width: 250px; height: 200px; object-fit: cover;">
-                                            <input type="hidden" class="form-control" id="data[1][previous_qr]" name="data[1][previous_qr]" value="{{ Storage::url($bank_transfer->qr) }}" >
+                                            <input type="hidden" class="form-control" id="data[0][previous_qr]" name="data[0][previous_qr]" value="{{ Storage::url($bank_transfer->qr) }}" >
                                         @endif
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="data[1][bank]">Bank Name</label>
-                                        <input type="text" class="form-control disabled" id="data[1][bank]" name="data[1][bank]" placeholder="Bank Name" value="Bank Transfer" readonly />
+                                        <label for="data[0][bank]">Bank Name</label>
+                                        <input type="text" class="form-control disabled" id="data[0][bank]" name="data[0][bank]" placeholder="Bank Name" value="Security Bank" readonly />
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="data[1][number]">Account/Phone Number</label>
-                                        <input type="text" class="form-control" id="data[1][number]" name="data[1][number]" placeholder="Account/Phone Number" value="{{ $bank_transfer->number ?? '' }}" required />
+                                        <label for="data[0][number]">Account/Phone Number</label>
+                                        <input type="text" class="form-control" id="data[0][number]" name="data[0][number]" placeholder="Account/Phone Number" value="{{ $bank_transfer->number ?? '' }}" required />
                                     </div>
                                     <div class="design-form my-3">
-                                        <label for="data[1][qr]">QR Code (optional)</label>
-                                        <input type="file" class="form-control" id="data[1][qr]" name="data[1][qr]" placeholder="QR Code" accept="image/*" {{ !empty($bank_transfer->qr) ? '' : 'required' }} />
+                                        <label for="data[0][qr]">QR Code (optional)</label>
+                                        <input type="file" class="form-control" id="data[0][qr]" name="data[0][qr]" placeholder="QR Code" accept="image/*" {{ !empty($bank_transfer->qr) ? '' : 'required' }} />
                                     </div>
                                 </div>
                                 <div class="card-footer">

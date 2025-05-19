@@ -20,10 +20,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title w-100">
-                            <div class="float-right">
-                                <a href="{{ route('admin.order.export', $order->id) }}" target="_blank" class="btn btn-primary" style="font-size: small;">Download PDF</a>
-                            </div>
+                        <h4 class="card-title">
                             <div class="d-flex">
                                 <i class="nc-icon nc-basket me-3"></i>
                                 <div class="">
@@ -72,6 +69,8 @@
                                     @csrf
                                 </form>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
+                            @elseif ($order->status->name == 'Completed')
+                                <a href="{{ route('admin.order.export', $order->id) }}" target="_blank" class="btn btn-primary" style="font-size: small;">Download Invoice</a>
                             @endif
                             @if (!empty($order->estimate_delivery))
                                 <div class="">

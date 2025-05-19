@@ -303,13 +303,13 @@
                                     <p><i class="fa fa-info-circle"></i> <strong>IMPORTANT:</strong> Please ensure you send the exact amount required. <strong>NO REFUNDS</strong> will be issued for incorrect payments. Double-check your payment before completing the transaction. Thank you for your understanding!</p>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="type_details d-none">
+                                    <div class="type_details">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4 class="card-title">
                                                     <span class="gcash-payment d-none">G-Cash</span>
                                                     @if (!empty($bank_payment))
-                                                        <span class="bank-payment d-none">Bank Transfer</span>
+                                                        <span class="bank-payment">Bank Transfer</span>
                                                     @endif
                                                 </h4>
                                             </div>
@@ -323,7 +323,7 @@
                                                     <h5 class="mt-3"><b>Account/Phone Number</b>: {{ $gcash_payment->number ?? '' }}</h5>
                                                 </div>
                                                 @if (!empty($bank_payment))
-                                                    <div class="bank-payment d-none">
+                                                    <div class="bank-payment">
                                                         <div class="qr-display">
                                                             @if (!empty($bank_payment->qr))
                                                                 <img src="{{ Storage::url($bank_payment->qr) }}" alt="Payment QR Code" style="width: 450px; height: 400px; object-fit: cover;">
@@ -377,12 +377,12 @@
                             
                             <div class="mb-3">
                                 <label for="img">Image</label>
-                                <input type="file" class="form-control" id="img" name="img" placeholder="Image" accept="image/*" required />
+                                <input type="file" class="form-control" id="img" name="img" placeholder="Image" accept="image/*" />
                             </div>
                             <input type="hidden" name="rate" id="rating-value" value="0">
                             <div class="mb-3">
                                 <label for="message">Message</label>
-                                <textarea class="form-control px-2" style="height: 250px; max-height: 100%;" id="message" name="message" placeholder="Message" required></textarea>
+                                <textarea class="form-control px-2" style="height: 250px; max-height: 100%;" id="message" name="message" placeholder="Message" nullable></textarea>
                             </div>
                         </form>
                     </div>
@@ -574,7 +574,7 @@
                             </div>
                         `);
                     }
-                } else {
+                } else if (false) { // Prevent executing
                     $('.type_details').addClass('d-none');
                     $('.type_details').find('.gcash-payment').addClass('d-none');
                     $('.type_details').find('.bank-payment').addClass('d-none');
