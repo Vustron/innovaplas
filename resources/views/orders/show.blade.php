@@ -308,7 +308,7 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h4 class="card-title">
-                                                        <span class="bank-payment">Bank Transfer</span>
+                                                        {{-- <span class="bank-payment">Bank Transfer</span> --}}
                                                     </h4>
                                                 </div>
                                                 <div class="card-body text-center">
