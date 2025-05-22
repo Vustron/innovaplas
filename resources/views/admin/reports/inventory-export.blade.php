@@ -9,6 +9,15 @@
 <table>
     <thead>
         <tr>
+            <th style="border: 1px solid black; font-weight: 800;">Exported By</th>
+            <td style="border: 1px solid black;">{{ !empty(Auth::user()->profile) ? (Auth::user()->profile->name ." ". Auth::user()->profile->surname) : Auth::user()->email }}</td>
+        </tr>
+    </thead>
+</table>
+
+<table>
+    <thead>
+        <tr>
             <th style="font-weight: 800;" colspan="2">Generic Product Inventory</th>
         </tr>
         <tr>
