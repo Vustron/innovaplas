@@ -35,7 +35,7 @@ class HomeController extends BaseController
 
         $thisWeekSales = [];
         for ($date = $thisWeekStart->copy(); $date->lte($thisWeekEnd); $date->addDay()) {
-            $total = Order::whereDate('created_at', $date->toDateString())
+            $total = Order::where('order_status_id', 8)->whereDate('created_at', $date->toDateString())
                             ->sum('total');
             $thisWeekSales[$date->format('l')] = $total;
         }
@@ -46,7 +46,7 @@ class HomeController extends BaseController
 
         $lastWeekSales = [];
         for ($date = $lastWeekStart->copy(); $date->lte($lastWeekEnd); $date->addDay()) {
-            $total = Order::whereDate('created_at', $date->toDateString())
+            $total = Order::where('order_status_id', 8)->whereDate('created_at', $date->toDateString())
                             ->sum('total');
             $lastWeekSales[$date->format('l')] = $total;
         }
@@ -57,7 +57,7 @@ class HomeController extends BaseController
 
         $thisMonthSales = [];
         for ($date = $thisMonthStart->copy(); $date->lte($thisMonthEnd); $date->addDay()) {
-            $total = Order::whereDate('created_at', $date->toDateString())
+            $total = Order::where('order_status_id', 8)->whereDate('created_at', $date->toDateString())
                             ->sum('total');
             $thisMonthSales[(int) $date->format('d')] = $total;
         }
@@ -71,7 +71,7 @@ class HomeController extends BaseController
             $lastMonthDate = $lastMonthStart->copy()->addDays($date->day - 1);
             
             if ($lastMonthDate->lte($lastMonthEnd)) {
-                $total = Order::whereDate('created_at', $lastMonthDate->toDateString())
+                $total = Order::where('order_status_id', 8)->whereDate('created_at', $lastMonthDate->toDateString())
                                 ->sum('total');
                 $lastMonthSales[(int) $date->format('d')] = $total;
             } else {
@@ -87,12 +87,14 @@ class HomeController extends BaseController
         // Current Year
         $year = Carbon::now()->year;
         $thisYearSales = Order::select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as total_sales'))
+            ->where('order_status_id', 8)
             ->whereYear('created_at', $year)
             ->groupBy(DB::raw('MONTH(created_at)'))
             ->pluck('total_sales', 'month');
         
         $lastYear = $year - 1;
         $lastYearSales = Order::select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as total_sales'))
+            ->where('order_status_id', 8)
             ->whereYear('created_at', $lastYear)
             ->groupBy(DB::raw('MONTH(created_at)'))
             ->pluck('total_sales', 'month');
